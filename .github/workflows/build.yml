@@ -95,13 +95,33 @@ jobs:
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          name: World Times ${{ github.ref_name }}
-          tag_name: ${{ github.ref_name }}
-          generate_release_notes: false
-          files: |
-            app/build/outputs/apk/debug/app-debug.apk
-            app/build/outputs/apk/release/World-Times-${{ github.ref_name }}.apk
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          TAG="${{ github.ref_name }}"
+          
+          # Create release via API
+          curl -sL -X POST \
+            -H "Authorization: token $RELEASE_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/releases" \
+            -d "{\"tag_name\": \"$TAG\", \"name\": \"World Times $TAG\"}" > /tmp/release.json
+          
+          # Get upload URL
+          UPLOAD_URL=$(python3 -c "import json; d=json.load(open('/tmp/release.json')); print(d['upload_url'].replace('{?name,label}',''))")
+          
+          # Upload debug APK
+          curl -sL -X POST \
+            -H "Authorization: token $RELEASE_TOKEN" \
+            -H "Content-Type: application/vnd.android.package-archive" \
+            "$UPLOAD_URL?name=World-Times-debug.apk" \
+            --data-binary "@app/build/outputs/apk/debug/app-debug.apk" > /dev/null
+          
+          # Upload release APK
+          curl -sL -X POST \
+            -H "Authorization: token $RELEASE_TOKEN" \
+            -H "Content-Type: application/vnd.android.package-archive" \
+            "$UPLOAD_URL?name=World-Times-$TAG.apk" \
+            --data-binary "@app/build/outputs/apk/release/World-Times-$TAG.apk" > /dev/null
+          
+          echo "Release created: https://github.com/${{ github.repository }}/releases/tag/$TAG"
