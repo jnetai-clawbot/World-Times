@@ -15,7 +15,6 @@ import com.jnetai.worldtimes.fragments.UtcBlocksFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNav;
     private Fragment activeFragment;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomNav = findViewById(R.id.bottom_nav);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();

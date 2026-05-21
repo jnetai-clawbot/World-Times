@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.jnetai.worldtimes.R;
-import com.jnetai.worldtimes.utils.TimeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,11 +20,10 @@ import java.util.TimeZone;
 
 /**
  * UTC blocks fragment showing current time at every UTC offset (-12 to +12).
- * Matches the web app's UTC offset reference grid.
  */
 public class UtcBlocksFragment extends Fragment {
 
-    private androidx.gridlayout.widget.GridLayout utcGrid;
+    private LinearLayout utcContainer;
 
     @Nullable
     @Override
@@ -36,39 +35,77 @@ public class UtcBlocksFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        utcGrid = view.findViewById(R.id.utcGrid);
+        utcContainer = view.findViewById(R.id.utcContainer);
         buildUtcBlocks();
     }
 
     private void buildUtcBlocks() {
-        utcGrid.removeAllViews();
-        utcGrid.setColumnCount(5);
-
-        // Get current UTC time
         TimeZone utc = TimeZone.getTimeZone("UTC");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
         timeFormat.setTimeZone(utc);
 
-        for (int i = -12; i <= 12; i++) {
-            View blockView = getLayoutInflater().inflate(R.layout.item_utc_block, utcGrid, false);
-            TextView offsetText = blockView.findViewById(R.id.utcOffsetText);
-            TextView timeText = blockView.findViewById(R.id.utcTimeText);
+        String[] weekDays = {"SUN","MON","TUE","WED","THU","FRI","SAT"};
 
-            String label = i > 0 ? "+" + i : String.valueOf(i);
-            offsetText.setText("UTC" + label);
+        LinearLayout currentRow = null;
+
+        for (int i = -12; i <= 12; i++) {
+            // New row every 5 items
+            int idx = i + 12;
+            if (idx % 5 == 0) {
+                currentRow = new LinearLayout(requireContext());
+                currentRow.setOrientation(LinearLayout.HORIZONTAL);
+                currentRow.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ));
+                utcContainer.addView(currentRow);
+            }
 
             // Calculate time at this offset
             java.util.Calendar cal = java.util.Calendar.getInstance(utc);
             cal.add(java.util.Calendar.HOUR_OF_DAY, i);
-            timeText.setText(new SimpleDateFormat("HH:mm", Locale.US).format(cal.getTime()));
+            String timeStr = new SimpleDateFormat("HH:mm", Locale.US).format(cal.getTime());
+            int dayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK) - 1;
+            String dayStr = weekDays[dayOfWeek];
 
-            // Highlight current offset (UTC+0)
+            String label = i > 0 ? "+" + i : String.valueOf(i);
+
+            LinearLayout block = new LinearLayout(requireContext());
+            block.setOrientation(LinearLayout.VERTICAL);
+            block.setGravity(android.view.Gravity.CENTER);
+            block.setLayoutParams(new LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
+            ));
+
             if (i == 0) {
-                blockView.setBackgroundResource(R.drawable.bg_utc_now);
-                offsetText.setTextColor(getResources().getColor(R.color.primary, null));
+                block.setBackgroundResource(R.drawable.bg_utc_now);
+            } else {
+                block.setBackgroundResource(R.drawable.bg_utc_block);
             }
 
-            utcGrid.addView(blockView);
+            TextView offsetText = new TextView(requireContext());
+            offsetText.setText("UTC" + label);
+            offsetText.setTextSize(9);
+            offsetText.setTextColor(i == 0 ? 0xFF00D4FF : 0xFF60A5FA);
+            offsetText.setGravity(android.view.Gravity.CENTER);
+
+            TextView timeText = new TextView(requireContext());
+            timeText.setText(timeStr);
+            timeText.setTextSize(11);
+            timeText.setTextColor(0xFFE0E8F0);
+            timeText.setGravity(android.view.Gravity.CENTER);
+
+            TextView dayText = new TextView(requireContext());
+            dayText.setText(dayStr);
+            dayText.setTextSize(8);
+            dayText.setTextColor(0xFF94A3B8);
+            dayText.setGravity(android.view.Gravity.CENTER);
+
+            block.addView(offsetText);
+            block.addView(timeText);
+            block.addView(dayText);
+
+            if (currentRow != null) currentRow.addView(block);
         }
     }
 }

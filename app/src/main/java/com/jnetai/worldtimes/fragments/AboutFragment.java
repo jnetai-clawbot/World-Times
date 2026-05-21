@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.jnetai.worldtimes.BuildConfig;
 import com.jnetai.worldtimes.R;
 
 /**
@@ -30,9 +29,9 @@ public class AboutFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView versionText = view.findViewById(R.id.versionText);
-        versionText.setText("Version " + BuildConfig.VERSION_NAME + " (build " + BuildConfig.VERSION_CODE + ")");
+        versionText.setText("Version v1.0.0");
 
         TextView githubLink = view.findViewById(R.id.githubLink);
-        githubLink.setText("https://github.com/jnetai-clawbot/World-Times");
+        githubLink.setText("github.com/jnetai-clawbot/World-Times");
     }
 }

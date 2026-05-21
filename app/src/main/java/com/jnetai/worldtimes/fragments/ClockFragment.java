@@ -1,18 +1,15 @@
 package com.jnetai.worldtimes.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +22,8 @@ import com.jnetai.worldtimes.data.CityData;
 import com.jnetai.worldtimes.data.CoordLookup;
 import com.jnetai.worldtimes.utils.TimeUtils;
 
-import java.util.Locale;
-
 /**
  * Main clock fragment showing live digital clock, city grid, coordinate lookup.
- * Mirrors the web app's functionality.
  */
 public class ClockFragment extends Fragment {
 
@@ -37,15 +31,14 @@ public class ClockFragment extends Fragment {
     private TextView clockDate;
     private TextView gridHint;
     private EditText coordsInput;
-    private LinearLayout timeInfoCard;
     private TextView timeInfoText;
-    private GridLayout cityGrid;
+    private LinearLayout timeInfoCard;
+    private LinearLayout cityGrid;
     private Button btnShowAll;
     private Button btnCoordFind;
 
     private final Handler clockHandler = new Handler(Looper.getMainLooper());
     private boolean clockRunning = true;
-    private boolean gridVisible = false;
 
     private final Runnable clockRunnable = new Runnable() {
         @Override
@@ -82,12 +75,8 @@ public class ClockFragment extends Fragment {
         // Start live clock
         clockHandler.post(clockRunnable);
 
-        // Build city grid
-        buildCityGrid();
-
         // Show All Timezones button
         btnShowAll.setOnClickListener(v -> {
-            gridVisible = true;
             cityGrid.setVisibility(View.VISIBLE);
             gridHint.setText(R.string.tap_city_hint);
         });
@@ -98,28 +87,17 @@ public class ClockFragment extends Fragment {
             doCoordLookup();
             return true;
         });
+
+        // Build city grid initially
+        buildCityGrid();
     }
 
     private void buildCityGrid() {
-        // Build grid columns based on width: 3-7 columns responsive
-        int screenWidth = getResources().getDisplayMetrics().widthPixels;
-        int dpWidth = (int) (screenWidth / getResources().getDisplayMetrics().density);
-        int columns;
-        if (dpWidth >= 820) columns = 7;
-        else if (dpWidth >= 640) columns = 6;
-        else if (dpWidth >= 500) columns = 5;
-        else if (dpWidth >= 400) columns = 4;
-        else if (dpWidth >= 340) columns = 3;
-        else columns = 2;
-
-        cityGrid.setColumnCount(columns);
-
+        // Region data
         String[] regionNames = {
-                "North America", "Central & South America", "Europe",
-                "Asia", "Africa", "Australia & Pacific", "Atlantic, Arctic & Antarctica"
+                "NORTH AMERICA", "CENTRAL & SOUTH AMERICA", "EUROPE",
+                "ASIA", "AFRICA", "AUSTRALIA & PACIFIC", "ATLANTIC, ARCTIC & ANTARCTICA"
         };
-
-        // Define which cities belong to which region (maintain web app order)
         String[][] regionCities = {
                 {"New York","Chicago","Denver","Phoenix","Los Angeles","Anchorage","Honolulu",
                         "Toronto","Vancouver","Montreal","Halifax","St. John's","Mexico City",
@@ -161,33 +139,48 @@ public class ClockFragment extends Fragment {
             TextView regionLabel = new TextView(requireContext());
             regionLabel.setText(regionNames[r]);
             regionLabel.setTextSize(10);
-            regionLabel.setTextColor(getResources().getColor(R.color.accent_blue, null));
+            regionLabel.setTextColor(0xFF00D4FF);
             regionLabel.setLetterSpacing(0.12f);
-            regionLabel.setAllCaps(true);
-            GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
-            lp.columnSpec = GridLayout.spec(0, columns);
-            lp.width = GridLayout.LayoutParams.MATCH_PARENT;
-            lp.setMargins(0, 10, 0, 4);
-            cityGrid.addView(regionLabel, lp);
+            regionLabel.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+            ((LinearLayout.LayoutParams) regionLabel.getLayoutParams()).setMargins(0, 10, 0, 4);
+            cityGrid.addView(regionLabel);
 
-            // City buttons for this region
-            for (String cityName : regionCities[r]) {
+            // Cities in this region
+            LinearLayout row = null;
+            for (int c = 0; c < regionCities[r].length; c++) {
+                // New row every 3 cities
+                if (c % 3 == 0) {
+                    row = new LinearLayout(requireContext());
+                    row.setOrientation(LinearLayout.HORIZONTAL);
+                    row.setLayoutParams(new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    ));
+                    cityGrid.addView(row);
+                }
+
+                String cityName = regionCities[r][c];
                 Button cityBtn = new Button(requireContext(), null, android.R.attr.buttonStyleSmall);
                 cityBtn.setText(cityName);
                 cityBtn.setTextSize(11);
-                cityBtn.setTextColor(getResources().getColor(R.color.text_primary, null));
+                cityBtn.setTextColor(0xFFE0E8F0);
                 cityBtn.setBackgroundResource(R.drawable.btn_city_grid);
-                cityBtn.setPadding(4, 6, 4, 6);
+                cityBtn.setPadding(6, 6, 6, 6);
                 cityBtn.setSingleLine(true);
                 cityBtn.setEllipsize(android.text.TextUtils.TruncateAt.END);
+                cityBtn.setLayoutParams(new LinearLayout.LayoutParams(
+                    0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
+                ));
 
-                // Set click handler - look up the timezone for this city
                 CityData.City city = CityData.CITIES.get(cityName);
                 if (city != null) {
                     cityBtn.setOnClickListener(v -> showCityTime(city));
                 }
 
-                cityGrid.addView(cityBtn);
+                if (row != null) row.addView(cityBtn);
             }
         }
     }
@@ -199,22 +192,22 @@ public class ClockFragment extends Fragment {
 
         timeInfoCard.setVisibility(View.VISIBLE);
         timeInfoText.setText(
-                "Your Local: " + TimeUtils.getCurrentDateString() + ", " + TimeUtils.getCurrentTimeString() + "\n" +
-                "\uD83D\uDCCD " + city.displayName + ": " + cityTime + "\n" +
-                "Time Diff: " + diffStr
+            "Your Local: " + TimeUtils.getCurrentDateString() + ", " + TimeUtils.getCurrentTimeString() + "\n" +
+            "\uD83D\uDCCD " + city.displayName + ": " + cityTime + "\n" +
+            "Time Diff: " + diffStr
         );
     }
 
     private void doCoordLookup() {
         String raw = coordsInput.getText().toString().trim();
         if (raw.isEmpty()) {
-            Toast.makeText(requireContext(), R.string.coords_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Enter coordinates (lat, lon)", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String[] parts = raw.split(",");
         if (parts.length != 2) {
-            Toast.makeText(requireContext(), R.string.coords_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Invalid format. Use: lat, lon", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -228,13 +221,13 @@ public class ClockFragment extends Fragment {
                 float diff = TimeUtils.getTimeDifferenceHours(nearest.timezoneId);
                 timeInfoCard.setVisibility(View.VISIBLE);
                 timeInfoText.setText(
-                        "Nearest city: " + nearest.displayName + "\n" +
-                        "\uD83D\uDCCD " + nearest.displayName + ": " + cityTime + "\n" +
-                        "Time Diff: " + TimeUtils.formatTimeDifference(diff)
+                    "Nearest: " + nearest.displayName + "\n" +
+                    "\uD83D\uDCCD " + nearest.displayName + ": " + cityTime + "\n" +
+                    "Time Diff: " + TimeUtils.formatTimeDifference(diff)
                 );
             }
         } catch (NumberFormatException e) {
-            Toast.makeText(requireContext(), R.string.coords_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Invalid coordinates", Toast.LENGTH_SHORT).show();
         }
     }
 
