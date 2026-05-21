@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <!-- Live Clock Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/btn_city_grid"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/clockTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:textSize="32sp"
+                android:textColor="@color/clock_color"
+                android:letterSpacing="0.05"
+                android:text="--:--:--" />
+
+            <TextView
+                android:id="@+id/clockDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/text_muted"
+                android:letterSpacing="0.1"
+                android:layout_marginTop="4dp"
+                android:text="----" />
+        </LinearLayout>
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="World Clock"
+                android:textSize="20sp"
+                android:textColor="@color/accent_blue"
+                android:textStyle="bold"
+                android:letterSpacing="-0.02" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tap_city_hint"
+                android:textSize="12sp"
+                android:textColor="@color/text_muted"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Action buttons row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="12dp">
+
+            <Button
+                android:id="@+id/btnShowAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_all_timezones"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:backgroundTint="@color/secondary" />
+
+            <Button
+                android:id="@+id/btnCoordFind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/find_timezone"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:backgroundTint="@color/primary"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Coordinates row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coordinates:"
+                android:textSize="13sp"
+                android:textColor="@color/text_muted"
+                android:layout_marginEnd="8dp" />
+
+            <EditText
+                android:id="@+id/coordsInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/coordinates_hint"
+                android:inputType="text"
+                android:fontFamily="monospace"
+                android:textSize="13sp"
+                android:background="@drawable/bg_utc_block"
+                android:padding="9dp"
+                android:textColor="@color/text_primary"
+                android:maxLines="1"
+                android:imeOptions="actionDone" />
+        </LinearLayout>
+
+        <!-- Time Info display -->
+        <LinearLayout
+            android:id="@+id/timeInfoCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/btn_city_grid"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/timeInfoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/text_muted"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <!-- City Grid -->
+        <LinearLayout
+            android:id="@+id/cityGridContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tap a city to see its local time"
+                android:textSize="11sp"
+                android:textColor="@color/text_muted"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/gridHint" />
+
+            <!-- City grid will be populated programmatically -->
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/cityGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

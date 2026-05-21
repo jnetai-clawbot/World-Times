@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">World Times</string>
+    <string name="nav_clock">Clock</string>
+    <string name="nav_utc_blocks">UTC Blocks</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_about">About</string>
+    <string name="search_hint">Search cities, regions, or timezones…</string>
+    <string name="show_all_timezones">Show All Timezones</string>
+    <string name="coordinates_hint">Lat., Long. (e.g. 40.71, -74.00)</string>
+    <string name="find_timezone">Find</string>
+    <string name="utc_blocks_label">UTC Offset Reference</string>
+    <string name="tap_city_hint">Tap any city to see local time</string>
+    <string name="made_by">Made by jnetai.com</string>
+    <string name="app_version">Version</string>
+    <string name="github_link">GitHub Repository</string>
+    <string name="your_time">Your Local Time</string>
+    <string name="time_difference">Time Difference</string>
+    <string name="coords_error">Enter valid coordinates like: 40.71, -74.00</string>
+    <string name="no_city_match">No cities match your search</string>
+    <string name="world_times_title">World Times</string>
+    <string name="back_button">Back</string>
+</resources>

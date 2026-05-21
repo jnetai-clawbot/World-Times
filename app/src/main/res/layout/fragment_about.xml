@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp">
+
+        <!-- App Icon placeholder -->
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:text="WT"
+            android:textSize="28sp"
+            android:textColor="@color/accent_blue"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:background="@drawable/btn_city_grid" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/world_times_title"
+            android:textSize="24sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:letterSpacing="-0.02"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/versionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/text_muted"
+            android:layout_marginTop="4dp" />
+
+        <View
+            android:layout_width="48dp"
+            android:layout_height="1dp"
+            android:background="@color/text_muted"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/made_by"
+            android:textSize="15sp"
+            android:textColor="@color/accent_purple"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/github_link"
+            android:textSize="13sp"
+            android:textColor="@color/accent_blue"
+            android:layout_marginTop="8dp"
+            android:id="@+id/githubLink"
+            android:autoLink="web"
+            android:linksClickable="true" />
+
+        <View
+            android:layout_width="48dp"
+            android:layout_height="1dp"
+            android:background="@color/text_muted"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="City data provided by IANA timezone database"
+            android:textSize="11sp"
+            android:textColor="@color/text_muted"
+            android:layout_marginTop="16dp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Offline world clock app"
+            android:textSize="11sp"
+            android:textColor="@color/text_muted"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+
+</ScrollView>
