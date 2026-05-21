@@ -104,4 +104,4 @@ jobs:
             app/build/outputs/apk/debug/app-debug.apk
             app/build/outputs/apk/release/World-Times-${{ github.ref_name }}.apk
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
