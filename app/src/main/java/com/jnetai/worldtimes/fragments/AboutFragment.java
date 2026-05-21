@@ -33,6 +33,6 @@ public class AboutFragment extends Fragment {
         versionText.setText("Version " + BuildConfig.VERSION_NAME + " (build " + BuildConfig.VERSION_CODE + ")");
 
         TextView githubLink = view.findViewById(R.id.githubLink);
-        githubLink.setText("https://github.com/jnetai-clawbot/World-Times.apk");
+        githubLink.setText("https://github.com/jnetai-clawbot/World-Times");
     }
 }

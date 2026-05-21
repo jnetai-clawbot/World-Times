@@ -1,26 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Background gradient stops -->
     <color name="background_start">#0f1923</color>
     <color name="background_mid">#1a2a3a</color>
     <color name="background_end">#0d1b2a</color>
-    <color name="primary">#3b82f6</color>
-    <color name="primary_dark">#2563eb</color>
-    <color name="secondary">#6366f1</color>
-    <color name="secondary_dark">#4f46e5</color>
+
+    <!-- Primary / accent colors -->
+    <color name="primary">#00d4ff</color>
+    <color name="primary_dark">#0099cc</color>
+    <color name="secondary">#ffd700</color>
+    <color name="secondary_dark">#ccaa00</color>
+
+    <!-- Accent variants -->
+    <color name="accent_blue">#00d4ff</color>
+    <color name="accent_purple">#a855f7</color>
+    <color name="accent_red">#f44336</color>
+    <color name="accent_gold">#ffd700</color>
+
+    <!-- Clock specific -->
+    <color name="clock_color">#80ffe0</color>
+
+    <!-- Text colors -->
     <color name="text_primary">#e0e8f0</color>
-    <color name="text_muted">#94a3b8</color>
-    <color name="accent_blue">#60a5fa</color>
-    <color name="accent_purple">#a78bfa</color>
-    <color name="accent_red">#f87171</color>
-    <color name="clock_color">#daf6ff</color>
-    <color name="card_background">rgba_white_4</color>
-    <color name="card_border">rgba_white_6</color>
-    <color name="surface_light">rgba_white_8</color>
-    <color name="surface_medium">rgba_white_7</color>
-    <color name="search_background">rgba_white_12</color>
-    <color name="tz_highlight">rgba_blue_15</color>
-    <color name="tz_highlight_border">rgba_blue_30</color>
-    <color name="transparent">#00000000</color>
+    <color name="text_secondary">#8899aa</color>
+    <color name="text_muted">#556677</color>
+
+    <!-- UI elements -->
+    <color name="card_bg">#1e3040</color>
+    <color name="card_bg_dark">#162433</color>
+    <color name="divider_color">#2a3f50</color>
+
+    <!-- Dark background aliases -->
+    <color name="darkBg1">#0f1923</color>
+    <color name="darkBg2">#1a2a3a</color>
+    <color name="darkBg3">#0d1b2a</color>
+
+    <!-- UTC blocks -->
+    <color name="utc_highlight">#ff8822</color>
+    <color name="utc_now">#f44336</color>
+    <color name="search_bg">#162433</color>
+
+    <!-- Basic -->
     <color name="white">#FFFFFF</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
+
+    <!-- Legacy aliases (from initial colors.xml) -->
+    <color name="accentCyan">#00d4ff</color>
+    <color name="accentCyanDim">#0099cc</color>
+    <color name="accentGold">#ffd700</color>
+    <color name="textPrimary">#e0e8f0</color>
+    <color name="textSecondary">#8899aa</color>
+    <color name="textMuted">#556677</color>
+    <color name="cardBg">#1e3040</color>
+    <color name="cardBgDark">#162433</color>
+    <color name="dividerColor">#2a3f50</color>
+    <color name="utcHighlight">#ff8822</color>
+    <color name="utcNow">#f44336</color>
+    <color name="searchBg">#162433</color>
 </resources>

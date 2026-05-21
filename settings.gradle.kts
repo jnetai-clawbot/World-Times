@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "WorldTimes"
+rootProject.name = "World-Times"
 include(":app")
