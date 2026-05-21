@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.gridlayout.widget.GridLayout;
 
 import com.jnetai.worldtimes.R;
 import com.jnetai.worldtimes.data.CityData;
