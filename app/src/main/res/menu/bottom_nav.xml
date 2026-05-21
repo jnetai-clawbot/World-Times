@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/clockFragment"
+        android:id="@+id/nav_clock"
         android:icon="@drawable/ic_clock"
         android:title="@string/nav_clock" />
     <item
-        android:id="@+id/utcBlocksFragment"
+        android:id="@+id/nav_utc"
         android:icon="@drawable/ic_utc"
         android:title="@string/nav_utc_blocks" />
     <item
-        android:id="@+id/searchFragment"
+        android:id="@+id/nav_search"
         android:icon="@drawable/ic_search"
         android:title="@string/nav_search" />
     <item
-        android:id="@+id/aboutFragment"
+        android:id="@+id/nav_about"
         android:icon="@drawable/ic_info"
         android:title="@string/nav_about" />
 </menu>
